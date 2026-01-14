@@ -6,32 +6,29 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Clone Code') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/Fahemrk/devops.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                dir('Documents/dev/welcome-react') {
-                    bat 'npm install'
-                }
+                bat 'npm install'
             }
         }
 
         stage('Build React App') {
             steps {
-                dir('Documents/dev/welcome-react') {
-                    bat 'npm run build'
-                }
+                bat 'npm run build'
             }
         }
     }
 
     post {
         success {
-            echo 'Build successful ✅'
+            echo 'React build successful 🎉'
         }
         failure {
             echo 'Build failed ❌'
